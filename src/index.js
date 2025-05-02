@@ -1,18 +1,25 @@
-import { gameBoard } from "./gameBoard";
-import "./styles.css";
+import { game } from "./game"
+import "./styles.css"
 
-let HBoard = document.getElementById("HBoard");
-let CBoard = document.getElementById("CBoard");
+let HBoard = document.getElementById("HBoard")
+let CBoard = document.getElementById("CBoard")
 
-const makeBoard = (appendto, kind) => {
-  kind = new gameBoard();
+const makeBoard = (game, boardElement) => {
+  const boardState = boardElement == HBoard ? game.HBoard : game.CBoard
+
   for (let i = 0; i < 100; i++) {
-    let div = document.createElement("div");
-    div.classList.add(`cell`, `${appendto.id + i}`);
+    let div = document.createElement("div")
+    div.classList.add(`cell`, `${boardElement.id + i}`)
+    div.addEventListener("click", () => {
+      game.cellClicked(i, boardState)
+    })
 
-    appendto.appendChild(div);
+    boardElement.appendChild(div)
   }
-};
+}
 
-makeBoard(HBoard, "HBoard");
-makeBoard(CBoard, "CBoard");
+const refresh = () => {}
+
+const newgame = new game(refresh)
+makeBoard(newgame, HBoard)
+makeBoard(newgame, CBoard)

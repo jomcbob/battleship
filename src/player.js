@@ -1,10 +1,9 @@
-import { gameBoard } from "./gameBoard";
+import { gameBoard } from "./gameBoard"
 
 class player {
-  constructor(kind) {
-    this.board = new gameBoard();
-    this.kind = kind;
+  constructor() {
+    this.board = new gameBoard()
   }
 }
 
-export { player };
+export { player }
