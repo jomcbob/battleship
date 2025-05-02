@@ -1,7 +1,22 @@
 body {
   height: 100vh;
-  background: linear-gradient(
-    rgba(86, 32, 184, 0.8),
-    rgba(255, 0, 0, 0) 70.71%
-  );
+}
+
+.boards {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex {
+  width: 500px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  box-sizing: border-box;
+  height: 50px;
+  width: 50px;
+  background-color: navy;
+  border: 1px solid black;
 }

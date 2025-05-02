@@ -3,7 +3,10 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.1",
     "@eslint/js": "^9.20.0",
+    "babel-jest": "^29.7.0",
     "css-loader": "^7.1.2",
     "eslint": "^9.20.1",
     "globals": "^16.0.0",
@@ -20,6 +23,7 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "jest"
   }
 }
