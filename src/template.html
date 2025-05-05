@@ -1,4 +1,3 @@
-<!-- src/template.html -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,9 +6,25 @@
     <title>Battle Ship</title>
   </head>
   <body>
+    <header class="head">
+      <input
+        type="text"
+        style="font-family: monospace; font-size: 40px"
+        readonly
+        id="LogInfo"
+        name="log"
+        placeholder="Captain's logbook:"
+      />
+      <button class="name">Change name</button>
+    </header>
     <div class="boards">
-      <div id="HBoard" class="flex"></div>
-      <div id="CBoard" class="flex"></div>
+      <div id="humanBoardContainer">
+        <button id="axis"><div class="text">⬅️ X - axis ➡️</div></button>
+        <div id="HBoard" class="flex"></div>
+      </div>
+      <div id="computerBoardContainer">
+        <div id="CBoard" class="flex"></div>
+      </div>
     </div>
   </body>
 </html>

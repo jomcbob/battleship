@@ -1,9 +1,9 @@
-const path = require("path"); // Add this line at the top
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path") // Add this line at the top
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: "./src/presentation/index.js",
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
@@ -35,4 +35,4 @@ module.exports = {
     ],
   },
   target: "web", // Add this line to target the browser environment
-};
+}

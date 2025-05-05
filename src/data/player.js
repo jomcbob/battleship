@@ -1,26 +1,17 @@
 import { gameBoard } from "./gameBoard"
 
 class player {
-  constructor() {
-    this.board = new gameBoard()
+  constructor(game) {
+    this.game = game
+    this.board = new gameBoard(game, this)
   }
 
-  placeShip(position, size, board) {
-    if (this.board.placeShip(position, size, board)) {
-      return true
-    }
-    return false
-  }
-
-  colorCell(num, board) {
-    this.board.colorCell(num, board)
+  placeShip(position, size, isHora) {
+    return this.board.placeShip(position, size, isHora)
   }
 
   checkIfValidCoords(square, length) {
-    if (this.board.checkIfValidCoords(square, length)) {
-      return true
-    }
-    return false
+    return this.board.checkIfValidCoords(square, length)
   }
 
   receiveAttack(position) {
