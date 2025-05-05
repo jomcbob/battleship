@@ -38,6 +38,7 @@ class gameBoard {
     switch (this.game.gameState) {
       case GameState.humanPlacesCarrier:
         if (
+          captainPrompts.typing === false &&
           this.player == this.game.currentPlayer &&
           this.placeShip(num, 5, xAxis)
         ) {
@@ -51,6 +52,7 @@ class gameBoard {
         break
       case GameState.humanPlacesBattleship:
         if (
+          captainPrompts.typing === false &&
           this.player == this.game.currentPlayer &&
           this.placeShip(num, 4, xAxis)
         ) {
@@ -60,6 +62,7 @@ class gameBoard {
         break
       case GameState.humanPlacesCruiser:
         if (
+          captainPrompts.typing === false &&
           this.player == this.game.currentPlayer &&
           this.placeShip(num, 3, xAxis)
         ) {
@@ -69,6 +72,7 @@ class gameBoard {
         break
       case GameState.humanPlacesSubmarine:
         if (
+          captainPrompts.typing === false &&
           this.player == this.game.currentPlayer &&
           this.placeShip(num, 3, xAxis)
         ) {
@@ -82,6 +86,7 @@ class gameBoard {
         break
       case GameState.humanPlacesPatrolBoat:
         if (
+          captainPrompts.typing === false &&
           this.player == this.game.currentPlayer &&
           this.placeShip(num, 2, xAxis)
         ) {
@@ -89,8 +94,14 @@ class gameBoard {
         }
         break
       case GameState.humanTurn:
-        if (this.player == this.game.currentPlayer) {
+        if (
+          this.player == this.game.currentPlayer &&
+          captainPrompts.typing === false &&
+          this.cells[num].attackState === AttackState.hasNotBeenAttacked
+        ) {
           this.game.humanMoves(num)
+          refresh()
+          this.game.setGameState(GameState.computerTurn)
         }
         break
     }
@@ -198,7 +209,6 @@ class gameBoard {
 
   placeShip(square, length, isHora) {
     if (!this.checkIfValidCoords(square, length, isHora)) {
-      console.log("Invalid placement")
       return false
     }
 
@@ -247,7 +257,6 @@ class gameBoard {
 
       return false
     } else {
-      console.log("hasBeenAttacked")
       return true
     }
   }

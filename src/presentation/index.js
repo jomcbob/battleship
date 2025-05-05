@@ -18,6 +18,7 @@ import "../styles.css"
 //      7.6 Check if hit
 //      7.7 Record results on cell
 //      7.8 Display results to user
+
 const captainPrompts = {
   userName: "Bob",
   namechange: document.querySelector(".name"),
@@ -71,7 +72,7 @@ const typeWriter = (string, toDisplay, index) => {
   if (index < string.length) {
     captainPrompts.typing = true
     toDisplay.value = string.slice(0, index + 1)
-    setTimeout(() => typeWriter(string, toDisplay, index + 1), 50)
+    setTimeout(() => typeWriter(string, toDisplay, index + 1), 30) // speed
   } else {
     captainPrompts.typing = false
 
@@ -87,6 +88,7 @@ let HBoard = document.getElementById("HBoard")
 let CBoard = document.getElementById("CBoard")
 
 const makeBoard = (board, boardElement) => {
+  boardElement.innerHTML = ""
   for (let i = 0; i < 100; i++) {
     let div = document.createElement("div")
     div.classList.add(`cell`, `${boardElement.id}${i}`)
@@ -145,13 +147,21 @@ const cheat = () => {
   return
 }
 
-window.cheat = cheat
+let newgame = new game(refresh)
+const loadGame = () => {
+  window.cheat = cheat
+  makeBoard(newgame.cplayer.board, CBoard)
+  makeBoard(newgame.hplayer.board, HBoard)
+  newgame.start()
+}
+loadGame()
 
-const newgame = new game(refresh)
-
-makeBoard(newgame.cplayer.board, CBoard)
-makeBoard(newgame.hplayer.board, HBoard)
-
-newgame.start()
+let newGame = document.getElementById("newGame")
+newGame.addEventListener("click", () => {
+  newgame = new game(refresh)
+  makeBoard(newgame.cplayer.board, CBoard)
+  makeBoard(newgame.hplayer.board, HBoard)
+  newgame.start()
+})
 
 export { captainPrompts, typeWriter, xAxis, refresh }

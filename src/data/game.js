@@ -42,8 +42,7 @@ class game {
   }
 
   humanMoves(num) {
-    this.cplayer.receiveAttack(num)
-    this.setGameState(GameState.computerTurn)
+    return this.cplayer.receiveAttack(num)
   }
 
   computerMoves() {
