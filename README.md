@@ -35,8 +35,6 @@ loadGame() // starts a new game
 
 ## 🕹️ Demo -> [Live here](jomcbob.github.io/battleship)
 
-Play the game by opening the `index.html` in your browser. Ships away!
-
 ## 📦 Project Structure
 
 This game is built from scratch using vanilla JavaScript, HTML, and CSS. It features an interactive UI, a bot opponent, and dynamic prompts from your digital captain.
