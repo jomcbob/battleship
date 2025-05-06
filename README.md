@@ -21,7 +21,7 @@
 
 > A classic Battleship strategy game with a captain's twist — written in JavaScript, no frameworks!
 
-## 🕹️ Demo
+## 🕹️ Demo [Live here](jomcbob.github.io/battleship)
 
 Play the game by opening the `index.html` in your browser. Ships away!
 
