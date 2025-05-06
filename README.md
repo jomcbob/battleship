@@ -1,8 +1,10 @@
 ## Cheats! 
-open devtools and run 
+Open devtools and run 
 ```js
 cheat() // see the bots ships
 loadGame() // starts a new game
+
+---
 
 ### My plan
 ```js
@@ -22,6 +24,9 @@ loadGame() // starts a new game
 //      7.6 Check if hit
 //      7.7 Record results on cell
 //      7.8 Display results to user
+
+---
+
 ```
 # ⚓ Battleship Command
 
