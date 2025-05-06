@@ -1,4 +1,4 @@
-### my plan
+### My plan
 ```js
 // New Game Starts
 // 1. Computer places all ships
