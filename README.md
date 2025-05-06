@@ -1,3 +1,9 @@
+## Cheats! 
+open devtools and run 
+```js
+cheat() // see the bots ships
+loadGame() // starts a new game
+
 ### My plan
 ```js
 // New Game Starts
