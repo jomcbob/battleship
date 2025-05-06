@@ -29,7 +29,6 @@ loadGame() // starts a new game
 
 ---
 
-```
 # ⚓ Battleship Command
 
 > A classic Battleship strategy game with a captain's twist — written in JavaScript, no frameworks!
