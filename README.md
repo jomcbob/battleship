@@ -29,7 +29,7 @@ Play the game by opening the `index.html` in your browser. Ships away!
 
 This game is built from scratch using vanilla JavaScript, HTML, and CSS. It features an interactive UI, intelligent bot opponent, and dynamic prompts from your digital captain.
 
-```js
+```
 /project-root
 ├── data/ # Core game logic (game, player, gameBoard, ship)
 ├── presentation/ # UI helpers (text typing, prompts, board rendering)
