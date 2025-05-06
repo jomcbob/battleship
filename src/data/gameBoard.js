@@ -118,6 +118,8 @@ class gameBoard {
         this.cells[index].isHovered = isHovered
       }
     }
+
+    refresh()
   }
 
   cellHovered(number, isHovered) {
@@ -128,7 +130,6 @@ class gameBoard {
           this.checkIfValidCoords(number, 5, xAxis)
         ) {
           this.markAsHovered(number, xAxis, 5, isHovered)
-          refresh()
         }
         break
       case GameState.humanPlacesBattleship:
@@ -137,7 +138,6 @@ class gameBoard {
           this.checkIfValidCoords(number, 4, xAxis)
         ) {
           this.markAsHovered(number, xAxis, 4, isHovered)
-          refresh()
         }
         break
       case GameState.humanPlacesCruiser:
@@ -146,7 +146,6 @@ class gameBoard {
           this.checkIfValidCoords(number, 3, xAxis)
         ) {
           this.markAsHovered(number, xAxis, 3, isHovered)
-          refresh()
         }
         break
       case GameState.humanPlacesSubmarine:
@@ -155,7 +154,6 @@ class gameBoard {
           this.checkIfValidCoords(number, 3, xAxis)
         ) {
           this.markAsHovered(number, xAxis, 3, isHovered)
-          refresh()
         }
         break
       case GameState.humanPlacesPatrolBoat:
@@ -164,13 +162,11 @@ class gameBoard {
           this.checkIfValidCoords(number, 2, xAxis)
         ) {
           this.markAsHovered(number, xAxis, 2, isHovered)
-          refresh()
         }
         break
       case GameState.humanTurn:
         if (this.player == this.game.currentPlayer) {
           this.markAsHovered(number, xAxis, 1, isHovered)
-          refresh()
         }
         break
     }
@@ -218,14 +214,14 @@ class gameBoard {
       for (let i = square; i < square + boat.length; i++) {
         this.cells[i].hasShip = true
         this.cells[i].ship = boat
-        this.cells[i].kindOfShip = this.giveBoatKind(boat.length)
+        this.cells[i].kindOfShip = this.game.giveBoatKind(boat.length)
       }
     } else {
       for (let i = 0; i < boat.length; i++) {
         const index = square + i * 10
         this.cells[index].hasShip = true
         this.cells[index].ship = boat
-        this.cells[index].kindOfShip = this.giveBoatKind(boat.length)
+        this.cells[index].kindOfShip = this.game.giveBoatKind(boat.length)
       }
     }
 
@@ -233,7 +229,7 @@ class gameBoard {
     return true
   }
 
-  hasReceivedAnAttack(index) {
+  hasReceivedAnAttack(index, attacker) {
     if (this.cells[index].attackState === AttackState.hasNotBeenAttacked) {
       if (!this.cells[index].hasShip) {
         this.cells[index].attackState = AttackState.miss
@@ -246,10 +242,11 @@ class gameBoard {
 
           if (ship.checkIfSunk()) {
             this.sunk++
+            this.game.checkStateAndGiveIsSunk(ship.length, false, attacker)
             if (this.sunk === 5) {
-              setTimeout(function () {
-                alert("you win!")
-              }, 1000)
+              setTimeout(() => {
+                this.game.checkStateAndGiveIsSunk(ship.length, true, attacker)
+              }, 2000)
             }
           }
         }
@@ -259,13 +256,6 @@ class gameBoard {
     } else {
       return true
     }
-  }
-
-  giveBoatKind(length) {
-    if (length === 5) return "carrier"
-    if (length === 4) return "battleship"
-    if (length === 3) return "cruiser or submarine"
-    if (length === 2) return "patrol boat"
   }
 
   hasLost() {

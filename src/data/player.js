@@ -1,9 +1,10 @@
 import { gameBoard } from "./gameBoard"
 
 class player {
-  constructor(game) {
+  constructor(game, name) {
     this.game = game
     this.board = new gameBoard(game, this)
+    this.name = name
   }
 
   placeShip(position, size, isHora) {
@@ -14,8 +15,8 @@ class player {
     return this.board.checkIfValidCoords(square, length)
   }
 
-  receiveAttack(position) {
-    return this.board.hasReceivedAnAttack(position)
+  receiveAttack(position, attacker) {
+    return this.board.hasReceivedAnAttack(position, attacker)
   }
 
   hasLost() {

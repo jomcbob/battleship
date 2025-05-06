@@ -27,6 +27,8 @@ header input {
 header button {
   width: 10%;
   font-size: 2vh;
+  background-color: beige;
+  border: none;
 }
 
 #humanBoardContainer {
@@ -35,6 +37,22 @@ header button {
   justify-content: center;
   width: 60vh;
   margin: 6vh 10px;
+}
+
+#sunk {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  font-size: 5vh;
+  color: aqua;
+  z-index: 1;
+  display: none;
+  background-color: #000;
+  opacity: 0.7;
 }
 
 #newGame {

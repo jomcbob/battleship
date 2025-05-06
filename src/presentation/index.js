@@ -32,6 +32,9 @@ const captainPrompts = {
     `Place your Submarine, captain ${captainPrompts.userName}!`,
   placePatrolBoat: () =>
     `Place your Patrol Boat, captain ${captainPrompts.userName}!`,
+  attackTheEnemy: () => `Attack captain ${captainPrompts.userName}!`,
+  youSunkAShip: () =>
+    `Good work captain ${captainPrompts.userName}! you have hit a ship`,
 }
 
 let xAxis = true
@@ -55,7 +58,7 @@ captainPrompts.namechange.addEventListener("click", () => {
     if (newName !== null) {
       captainPrompts.userName = newName
     }
-    typeWriter(captainPrompts.placeCarrier(), captainPrompts.LogInfo, 0)
+    typeWriter("", captainPrompts.LogInfo, 0)
   }
 })
 
@@ -72,7 +75,7 @@ const typeWriter = (string, toDisplay, index) => {
   if (index < string.length) {
     captainPrompts.typing = true
     toDisplay.value = string.slice(0, index + 1)
-    setTimeout(() => typeWriter(string, toDisplay, index + 1), 30) // speed
+    setTimeout(() => typeWriter(string, toDisplay, index + 1), 3) // speed
   } else {
     captainPrompts.typing = false
 
@@ -150,18 +153,20 @@ const cheat = () => {
 let newgame = new game(refresh)
 const loadGame = () => {
   window.cheat = cheat
+  window.loadGame = loadGame
+  newgame = new game(refresh)
   makeBoard(newgame.cplayer.board, CBoard)
   makeBoard(newgame.hplayer.board, HBoard)
   newgame.start()
+  // if (!Cheat) {
+  //   cheat()
+  // }
 }
 loadGame()
 
 let newGame = document.getElementById("newGame")
 newGame.addEventListener("click", () => {
-  newgame = new game(refresh)
-  makeBoard(newgame.cplayer.board, CBoard)
-  makeBoard(newgame.hplayer.board, HBoard)
-  newgame.start()
+  loadGame()
 })
 
-export { captainPrompts, typeWriter, xAxis, refresh }
+export { captainPrompts, typeWriter, xAxis, refresh, loadGame }
