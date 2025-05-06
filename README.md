@@ -34,7 +34,7 @@ This game is built from scratch using vanilla JavaScript, HTML, and CSS. It feat
 ├── data/ # Core game logic (game, player, gameBoard, ship)
 ├── presentation/ # UI helpers (text typing, prompts, board rendering)
 ├── styles.css # Styling
-├── index.html # Entry point
+├── template.html # Entry point
 └── README.md # This file
 ```
 
