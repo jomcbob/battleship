@@ -1,7 +1,7 @@
 ## Cheats! 
 Open devtools and run 
 ```js
-cheat() // see the bots ships
+W() // see the bots ships
 loadGame() // starts a new game
 ```
 
@@ -108,6 +108,8 @@ UI interactions:
 
 Axis toggle (X ↔ Y)
 
+difficulty toggle (normal -> impossible -> easy)
+
 Name change prompt
 
 typeWriter() effect
@@ -119,7 +121,7 @@ Visual effects for hover, hits, and sunk ships
 loadGame() to initialize everything
 
 🔧 How to Run
-Clone or download the repository
+Clone or Fork
 
 Open index.html in your browser
 
@@ -148,5 +150,5 @@ New Game: Restart the battle
 🧙 Developer Cheats
 Open your browser console and use:
 
-cheat()       // Toggles visibility of the bot's ships
+W()       // Toggles visibility of the bot's ships
 loadGame()    // Restarts the game
