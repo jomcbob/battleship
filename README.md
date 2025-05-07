@@ -52,7 +52,7 @@ This game is built from scratch using vanilla JavaScript, HTML, and CSS. It feat
 ## 🚢 Features
 
 - 🎯 **Turn-based gameplay**: Human vs. AI  
-- 🧠 **AI ship placement and attacks** using random logic  
+- 🧠 **AI ship placement and attacks** using three modes (normal -> impossible -> easy)
 - ✍️ **Typewriter effect** and dynamic captain prompts  
 - 🧭 **Mouse hover previews** for ship placement  
 - 🛠️ **Cheat mode**: Toggle computer's ship visibility for debugging  
