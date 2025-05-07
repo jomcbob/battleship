@@ -33,7 +33,7 @@ loadGame() // starts a new game
 
 > A classic Battleship strategy game with a captain's twist — written in JavaScript, no frameworks!
 
-## 🕹️ Demo -> [Live here]([https://jomcbob.github.io/battleship/])
+## 🕹️ Demo -> [Live here](https://jomcbob.github.io/battleship/)
 
 ## 📦 Project Structure
 
