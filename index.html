@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Battle Ship</title>
+  <script defer src="main.js"></script></head>
+  <body>
+    <header class="head">
+      <input
+        type="text"
+        style="font-family: monospace; font-size: 40px"
+        readonly
+        id="LogInfo"
+        name="log"
+        placeholder="Captain's logbook:"
+      />
+      <button class="name">Change name</button>
+    </header>
+
+    <div id="sunk">Sunk</div>
+
+    <div class="boards">
+      <div id="humanBoardContainer">
+        <button id="axis"><div class="text">⬅️ X - axis ➡️</div></button>
+        <div id="HBoard" class="flex"></div>
+      </div>
+      <div id="computerBoardContainer">
+        <button id="changeDifficulty">
+          <div class="text textDifficulty">Difficulty: Normal</div>
+        </button>
+        <div id="CBoard" class="flex"></div>
+      </div>
+    </div>
+
+    <button id="newGame">New game</button>
+  </body>
+</html>
