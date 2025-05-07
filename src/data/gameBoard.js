@@ -230,32 +230,117 @@ class gameBoard {
   }
 
   hasReceivedAnAttack(index, attacker) {
-    if (this.cells[index].attackState === AttackState.hasNotBeenAttacked) {
-      if (!this.cells[index].hasShip) {
-        this.cells[index].attackState = AttackState.miss
-      } else {
-        this.cells[index].attackState = AttackState.hit
-        const ship = this.cells[index].ship
+    const isWithinBounds = (i) => i >= 0 && i <= 99
+    if (this.cells[index].attackState !== AttackState.hasNotBeenAttacked) {
+      return true
+    }
 
-        if (ship) {
-          ship.gotHit()
+    if (!this.cells[index].hasShip) {
+      this.cells[index].attackState = AttackState.miss
+    } else {
+      this.cells[index].attackState = AttackState.hit
+      const ship = this.cells[index].ship
 
-          if (ship.checkIfSunk()) {
-            this.sunk++
-            this.game.checkStateAndGiveIsSunk(ship.length, false, attacker)
-            if (this.sunk === 5) {
-              setTimeout(() => {
-                this.game.checkStateAndGiveIsSunk(ship.length, true, attacker)
-              }, 2000)
-            }
+      if (ship) {
+        ship.gotHit()
+
+        const isHorizontal = this.isShipLikelyHorizontal(index)
+
+        if (isHorizontal === "none") {
+          console.log("no ships in bounds")
+        } else if (isHorizontal) {
+          if (isWithinBounds(index - 1) && this.isSameRow(index, index - 1)) {
+            this.player.hits.push({
+              toFind: index - 1,
+              origin: index,
+              direction: "horizontal",
+            })
+          }
+          if (isWithinBounds(index + 1) && this.isSameRow(index, index + 1)) {
+            this.player.hits.push({
+              toFind: index + 1,
+              origin: index,
+              direction: "horizontal",
+            })
+          }
+        } else if (isWithinBounds(index - 10) || isWithinBounds(index + 10)) {
+          if (isWithinBounds(index - 10))
+            this.player.hits.push({
+              toFind: index - 10,
+              origin: index,
+              direction: "vertical",
+            })
+          if (isWithinBounds(index + 10))
+            this.player.hits.push({
+              toFind: index + 10,
+              origin: index,
+              direction: "vertical",
+            })
+        }
+
+        if (ship.checkIfSunk()) {
+          this.player.hits = []
+          console.log(this.player.hits)
+          this.sunk++
+          this.game.checkStateAndGiveIsSunk(ship.length, false, attacker)
+
+          if (this.sunk === 5) {
+            setTimeout(() => {
+              this.game.checkStateAndGiveIsSunk(ship.length, true, attacker)
+            }, 2000)
+            return this.game.setGameState(
+              (this.game.gameState = GameState.gameEnd),
+            )
           }
         }
       }
+    }
 
-      return false
-    } else {
+    return false
+  }
+
+  isShipLikelyHorizontal(index) {
+    const isWithinBounds = (i) => i >= 0 && i <= 99
+    const notAttacked = (i) =>
+      this.cells[i].attackState === AttackState.hasNotBeenAttacked
+
+    const left = index - 1
+    const right = index + 1
+
+    if (
+      isWithinBounds(left) &&
+      this.isSameRow(index, left) &&
+      notAttacked(left) &&
+      this.hasShip(left)
+    ) {
       return true
     }
+
+    if (
+      isWithinBounds(right) &&
+      this.isSameRow(index, right) &&
+      notAttacked(right) &&
+      this.hasShip(right)
+    ) {
+      return true
+    }
+
+    const up = index - 10
+    const down = index + 10
+
+    if (isWithinBounds(up) && notAttacked(up) && this.hasShip(up)) {
+      return false
+    }
+
+    if (isWithinBounds(down) && notAttacked(down) && this.hasShip(down)) {
+      return false
+    }
+
+    return "none"
+  }
+
+  isSameRow(a, b) {
+    return Math.floor(a / 10) === Math.floor(b / 10)
   }
 
   hasLost() {

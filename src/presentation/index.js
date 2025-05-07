@@ -2,23 +2,6 @@ import { game } from "../data/game"
 import { AttackState } from "../data/gameBoard"
 import "../styles.css"
 
-// New Game Starts
-// 1. Computer places all ships
-// 2. Human Places Carrier
-// 3. Human Places Battleship
-// 4. Human Places Cruiser
-// 5. Human Places Submarine
-// 6. Human Places Patrol Boat
-// 7. Start Game Loop
-//      7.1 Computer makes random guess
-//      7.2 Check if hit
-//      7.3 Record results on cell
-//      7.4 Display results to user
-//      7.5 Human Clicks on cell
-//      7.6 Check if hit
-//      7.7 Record results on cell
-//      7.8 Display results to user
-
 const captainPrompts = {
   userName: "Bob",
   namechange: document.querySelector(".name"),
@@ -33,9 +16,30 @@ const captainPrompts = {
   placePatrolBoat: () =>
     `Place your Patrol Boat, captain ${captainPrompts.userName}!`,
   attackTheEnemy: () => `Attack captain ${captainPrompts.userName}!`,
-  youSunkAShip: () =>
-    `Good work captain ${captainPrompts.userName}! you have hit a ship`,
 }
+
+const DifficultyState = Object.freeze({
+  impossible: "Impossible",
+  normal: "Normal",
+  easy: "Easy",
+})
+
+let difficulty = DifficultyState.normal
+let changeDifficulty = document.getElementById("changeDifficulty")
+let texDifficulty = document.querySelector(".textDifficulty")
+
+changeDifficulty.addEventListener("click", () => {
+  if (difficulty === DifficultyState.impossible) {
+    texDifficulty.textContent = "Difficulty:" + " " + DifficultyState.normal
+    difficulty = DifficultyState.normal
+  } else if (difficulty === DifficultyState.normal) {
+    texDifficulty.textContent = "Difficulty:" + " " + DifficultyState.easy
+    difficulty = DifficultyState.easy
+  } else if (difficulty === DifficultyState.easy) {
+    texDifficulty.textContent = "Difficulty:" + " " + DifficultyState.impossible
+    difficulty = DifficultyState.impossible
+  }
+})
 
 let xAxis = true
 const text = document.querySelector(".text")
@@ -75,7 +79,7 @@ const typeWriter = (string, toDisplay, index) => {
   if (index < string.length) {
     captainPrompts.typing = true
     toDisplay.value = string.slice(0, index + 1)
-    setTimeout(() => typeWriter(string, toDisplay, index + 1), 3) // speed
+    setTimeout(() => typeWriter(string, toDisplay, index + 1), 30) // speed
   } else {
     captainPrompts.typing = false
 
@@ -144,7 +148,7 @@ const refreshBoard = (board, boardElement, cheat) => {
 }
 
 let Cheat = false
-const cheat = () => {
+const W = () => {
   Cheat = !Cheat
   refresh()
   return
@@ -152,21 +156,28 @@ const cheat = () => {
 
 let newgame = new game(refresh)
 const loadGame = () => {
-  window.cheat = cheat
+  window.W = W
   window.loadGame = loadGame
   newgame = new game(refresh)
   makeBoard(newgame.cplayer.board, CBoard)
   makeBoard(newgame.hplayer.board, HBoard)
   newgame.start()
-  // if (!Cheat) {
-  //   cheat()
-  // }
 }
 loadGame()
 
 let newGame = document.getElementById("newGame")
 newGame.addEventListener("click", () => {
-  loadGame()
+  if (captainPrompts.typing === false) {
+    loadGame()
+  }
 })
 
-export { captainPrompts, typeWriter, xAxis, refresh, loadGame }
+export {
+  captainPrompts,
+  typeWriter,
+  xAxis,
+  refresh,
+  loadGame,
+  difficulty,
+  DifficultyState,
+}

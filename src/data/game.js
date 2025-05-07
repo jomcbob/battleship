@@ -1,6 +1,12 @@
 import { player } from "./player"
 import { AttackState } from "./gameBoard"
-import { captainPrompts, typeWriter, loadGame } from "../presentation"
+import {
+  captainPrompts,
+  typeWriter,
+  loadGame,
+  difficulty,
+  DifficultyState,
+} from "../presentation"
 
 const GameState = Object.freeze({
   computerPlacesShips: 0,
@@ -31,6 +37,10 @@ class game {
   setGameState(gameState) {
     this.gameState = gameState
 
+    if (gameState === GameState.gameEnd) {
+      return
+    }
+
     if (gameState === GameState.computerTurn) {
       this.computerMoves()
       this.currentPlayer = this.cplayer
@@ -45,7 +55,62 @@ class game {
     return this.cplayer.receiveAttack(num, this.hplayer)
   }
 
-  computerMoves() {
+  computerMovesNormal() {
+    let num = Math.floor(Math.random() * 100)
+
+    if (this.hplayer.hits.length > 0) {
+      const currentHit = this.hplayer.hits.shift()
+      num = currentHit.toFind
+
+      if (this.hplayer.board.hasShip(num)) {
+        const hasHorizontal =
+          (num + 1 <= 99 &&
+            this.hplayer.board.hasShip(num + 1) &&
+            this.hplayer.board.isSameRow(num, num + 1)) ||
+          (num - 1 >= 0 &&
+            this.hplayer.board.hasShip(num - 1) &&
+            this.hplayer.board.isSameRow(num, num - 1))
+
+        const hasVertical =
+          (num + 10 <= 99 && this.hplayer.board.hasShip(num + 10)) ||
+          (num - 10 >= 0 && this.hplayer.board.hasShip(num - 10))
+
+        if (hasHorizontal) {
+          for (let i = this.hplayer.hits.length - 1; i >= 0; i--) {
+            if (this.hplayer.hits[i].isHoara === false) {
+              this.hplayer.hits.splice(i, 1)
+            }
+          }
+        }
+
+        if (hasVertical) {
+          for (let i = this.hplayer.hits.length - 1; i >= 0; i--) {
+            if (this.hplayer.hits[i].isHoara === true) {
+              this.hplayer.hits.splice(i, 1)
+            }
+          }
+        }
+      }
+    }
+
+    while (
+      this.hplayer.board.cells[num].attackState !==
+      AttackState.hasNotBeenAttacked
+    ) {
+      if (this.hplayer.hits.length > 0) {
+        const nextHit = this.hplayer.hits.shift()
+        num = nextHit.toFind
+      } else {
+        num = Math.floor(Math.random() * 100)
+      }
+    }
+
+    this.hplayer.receiveAttack(num, this.cplayer)
+    typeWriter(captainPrompts.attackTheEnemy(), captainPrompts.LogInfo, 0)
+    this.setGameState(GameState.humanTurn)
+  }
+
+  computerMovesEasy() {
     let num = Math.floor(Math.random() * 100)
 
     while (
@@ -58,6 +123,32 @@ class game {
     this.hplayer.receiveAttack(num, this.cplayer)
     typeWriter(captainPrompts.attackTheEnemy(), captainPrompts.LogInfo, 0)
     this.setGameState(GameState.humanTurn)
+  }
+
+  computerMovesImpossible() {
+    let board = this.hplayer.board
+    for (let i = 0; i < board.cells.length; i++) {
+      const element = board.cells[i]
+      if (
+        element.hasShip &&
+        element.attackState === AttackState.hasNotBeenAttacked
+      ) {
+        this.hplayer.receiveAttack(i, this.cplayer)
+        typeWriter(captainPrompts.attackTheEnemy(), captainPrompts.LogInfo, 0)
+        this.setGameState(GameState.humanTurn)
+        break
+      }
+    }
+  }
+
+  computerMoves() {
+    if (difficulty === DifficultyState.normal) {
+      this.computerMovesNormal()
+    } else if (difficulty === DifficultyState.easy) {
+      this.computerMovesEasy()
+    } else {
+      this.computerMovesImpossible()
+    }
   }
 
   computerPlacesShips() {
@@ -79,9 +170,7 @@ class game {
       }
     }
 
-    // console.log("bot", currentPlayer.board)
     currentPlayer = this.hplayer
-    // console.log("human", currentPlayer.board)
 
     this.setGameState(GameState.humanPlacesCarrier)
   }

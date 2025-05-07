@@ -5,6 +5,7 @@ class player {
     this.game = game
     this.board = new gameBoard(game, this)
     this.name = name
+    this.hits = []
   }
 
   placeShip(position, size, isHora) {
